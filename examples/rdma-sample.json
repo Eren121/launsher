@@ -1,0 +1,36 @@
+{
+  "project": "rdma-sample",
+  "cmake-setup-args": "-G Ninja",
+
+  "applications": {
+    "genghis": {
+      "host": "genghis",
+      "path": "~/projects/rdma-example",
+      "cmake-config": "relwithdebinfo",
+      "repository": "https://github.com/animeshtrivedi/rdma-example"
+    },
+    "genghis-dpu-1": {
+      "host": "genghis-dpu-1",
+      "path": "~/projects/rdma-example",
+      "cmake-config": "relwithdebinfo",
+      "repository": "https://github.com/animeshtrivedi/rdma-example"
+    }
+  },
+
+  "scenarios": {
+    "client-server-test": [
+      {
+        "name": "genghis",
+        "app": "genghis",
+        "cmake-target": "rdma_client",
+        "cmd": "../bin/rdma_client -a 192.168.0.102 -p 20886 -s ABCDefgh1234"
+      },
+      {
+        "name": "genghis-dpu-1",
+        "app": "genghis-dpu-1",
+        "cmake-target": "rdma_server",
+        "cmd": "../bin/rdma_server -p 20886"
+      }
+    ]
+  }
+}

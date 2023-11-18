@@ -1,0 +1,50 @@
+{
+  "project": "rdma_helper",
+  "cmake-setup-args": "-G Ninja",
+
+  "applications": {
+    "genghis": {
+      "host": "genghis",
+      "path": "~/projects/rdma_helper",
+      "cmake-config": "relwithdebinfo",
+      "repository": "https://github.com/Eren121/helper_rdma"
+    },
+    "genghis-dpu-1": {
+      "host": "genghis-dpu-1",
+      "path": "~/projects/rdma_helper",
+      "cmake-config": "relwithdebinfo",
+      "repository": "https://github.com/Eren121/helper_rdma"
+    }
+  },
+
+  "scenarios": {
+    "dpu2host": [
+      {
+        "name": "server (genghis)",
+        "app": "genghis",
+        "cmake-target": "helper_rdma_test",
+        "cmd": "./helper_rdma_test -s 0.0.0.0 20886 1000000 200000"
+      },
+      {
+        "name": "client (genghis-dpu-1)",
+        "app": "genghis-dpu-1",
+        "cmake-target": "helper_rdma_test",
+        "cmd": "./helper_rdma_test -c 192.168.0.2 20886 1000000 200000"
+      }
+    ],
+    "host2dpu": [
+      {
+        "name": "server (genghis-dpu-1)",
+        "app": "genghis-dpu-1",
+        "cmake-target": "helper_rdma_test",
+        "cmd": "./helper_rdma_test -c 192.168.0.2 20886 1000000 200000"
+      },
+      {
+        "name": "client (genghis)",
+        "app": "genghis",
+        "cmake-target": "helper_rdma_test",
+        "cmd": "./helper_rdma_test -s 192.168.0.2 20886 1000000 200000"
+      }
+    ]
+  }
+}
