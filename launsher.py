@@ -85,9 +85,10 @@ class Project:
         all_cmds += f" && mkdir -p {cmake_build_dir_name}"
         all_cmds += f" && cd {cmake_build_dir_name}"
         all_cmds += f" && cmake .. {cmake_setup_args} && cmake --build . --target {cmake_target}"
-        all_cmds += f" && {cmd}"
-
         pane.send_keys(all_cmds)
+
+        # Send the last command alone to make easy to launch again with arrows
+        pane.send_keys(f"{cmd}")
 
 
 def run(json_path: str, scenario: str) -> None:
